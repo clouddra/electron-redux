@@ -11,6 +11,8 @@ if (process.env.NODE_ENV === 'development') {
 
 
 app.on('window-all-closed', () => {
+  const ses = mainWindow.webContents.session;
+  ses.clearStorageData();
   if (process.platform !== 'darwin') app.quit();
 });
 

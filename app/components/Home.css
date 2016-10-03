@@ -1,14 +1,36 @@
-.container {
-  position: absolute;
-  top: 30%;
-  left: 10px;
-  text-align: center;
+.content {
+  padding: 20px;
+  width: 80vw;
+  height: 100%;
 }
 
-.container h2 {
+.content h2 {
   font-size: 5rem;
 }
 
-.container a {
+.content a {
   font-size: 1.4rem;
+}
+
+.nav {
+  background: rgb(60,63,65);
+  padding: 20px;
+  width: 12em;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav .navItem {
+  padding: 8px 8px 8px 8px;
+  text-decoration: none;
+  font-size: 1.05em;
+  color: rgb(187, 187, 187);
+  transition: 0.3s;
+}
+
+.container {
+  display: flex;
+  align-content: stretch;
+  min-height: 100vh;
 }
