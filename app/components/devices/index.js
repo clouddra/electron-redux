@@ -12,18 +12,24 @@ export default class Devices extends Component {
 
   render() {
     const { devices } = this.props;
-    const rows = devices.map( device =>
-        <tr>
-          <td>1</td>
-          <td colSpan="2">{ device.name }</td>
-          <td>{ device.brand }</td>
-          <td>{ device.model }</td>
-          <td>{ device.os }</td>
-          <td>15 Sep 2016</td>
-          <td><a id="link-view" href="/devices/2"><i>description</i></a></td>
-          <td><a id="link-edit" href="/devices/2/edit"><i>mode_edit</i></a></td>
-          <td><a><i>delete</i></a></td>
-        </tr>
+    const { removeDevice } = this.props.actions;
+
+    const rows = devices.map((device, index) =>
+      <tr>
+        <td>1</td>
+        <td colSpan="2">{ device.name }</td>
+        <td>{ device.brand }</td>
+        <td>{ device.model }</td>
+        <td>{ device.os }</td>
+        <td>15 Sep 2016</td>
+        <td><a id="link-view" href="/devices/2"><i>description</i></a></td>
+        <td><Link to={`/device/${index}/edit`}>mode_edit</Link></td>
+        <td>
+          <a onClick={()=>removeDevice(index)}>
+            <i>delete</i>
+          </a>
+        </td>
+      </tr>
     )
     return (
       <div>

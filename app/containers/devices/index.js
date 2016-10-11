@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DeviceList from '../../components/devices/index';
-import { addDevice } from '../../actions/device';
+import { removeDevice } from '../../actions/device';
 
 function mapStateToProps(state) {
   return {
@@ -9,4 +9,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(DeviceList);
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators({ removeDevice }, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceList);

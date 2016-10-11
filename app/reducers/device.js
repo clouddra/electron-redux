@@ -1,25 +1,36 @@
-import {ADD_DEVICE, REMOVE_DEVICE, SAVE_DEVICE} from '../actions/device';
+import {ADD_DEVICE, REMOVE_DEVICE, EDIT_DEVICE} from '../actions/device';
 import { handleActions, handleAction } from 'redux-actions';
 
 const deviceReducer = handleActions({
-  ADD_DEVICE: (state, action) => {
-    console.log('lllllllll', state);
-    return state;
-  },
-
-  REMOVE_DEVICE: (state, action) => [
+  REMOVE_DEVICE: (state = [], action) => {
+    console.log('REMOVE_DEVICEREMOVE_DEVICEREMOVE_DEVICE',  state);
+    return [
     ...state.slice(0, action.payload),
     ...state.slice(action.payload + 1)
-  ]
+    ];
+  }
 }, []);
 
-const addDevice = handleAction(
-  ADD_DEVICE,
-  (state = { devices: [], form: {}}, action) => {
+const defaultState = {devices: [], form: {}};
+
+const mainReducer = handleActions({
+  ADD_DEVICE: (state = defaultState, action) => {
+    console.log('ADD_DEVICEADD_DEVICEADD_DEVICEADD_DEVICE');
     state.devices = [ state.form.newDevice.values, ...state.devices ];
     return state;
+  },
+  EDIT_DEVICE: (state = defaultState, action) => {
+    let { devices } = state;
+    const modifiedDevices = [
+      ...devices.slice(0, action.payload),
+      state.form.editDevice.values,
+      ...devices.slice(action.payload + 1)
+    ];
+    state.devices = modifiedDevices;
+    console.log('EDIT_DEVICEEDIT_DEVICEEDIT_DEVICE', state);
+    return state;
   }
-);
+}, defaultState);
 
-export { addDevice };
+export { mainReducer };
 export default deviceReducer;

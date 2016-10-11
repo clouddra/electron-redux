@@ -5,6 +5,7 @@ import HomePage from './containers/HomePage';
 import CounterPage from './containers/CounterPage';
 import DevicePage from './containers/devices';
 import NewDevice from './containers/devices/new';
+import EditDevice from './containers/devices/edit';
 
 
 export default (
@@ -13,5 +14,6 @@ export default (
     <Route path="/counter" component={CounterPage} />
     <Route path="/devices" component={DevicePage} />
     <Route path="/device/new" component={NewDevice} />
+    <Route path="/device/:index/edit" component={EditDevice} />
   </Route>
 );

@@ -11,8 +11,7 @@ const schema = Joi.object().keys({
 });
 
 const validate = (values = {}) => {
-  Joi.validate(values, schema, {abortEarly: false }, function (err, value) {
-    console.log('validatevalidatevalidatevalidatevalidate', err.details, value);
+  Joi.validate(values, schema, {abortEarly: false}, function (err, value) {
   });
   return {}
 }
@@ -39,39 +38,43 @@ function serializeFiles(files) {
   return serializedFiles[0];
 }
 
+
 class ImageUploadCard extends Component {
-  state = {
-    imgPath: "http://placehold.it/320/08e/fff",
-    name: ""
+  static defaultProps = {
+    input: {
+      value: {
+        name: '',
+        path: 'http://placehold.it/320/08e/fff'
+      }
+    }
   };
 
-  handleChange(e) {
-    this.setState({imgPath: e.target.files[0].path, name: e.target.files[0].name});
-    return e;
-  }
-
   render() {
-    const { input, meta: { touched, error }, ...rest } = this.props;
+    const { input, meta: { _touched, _error }, ...rest } = this.props;
+    const { name, path } = { name: '', path: 'http://placehold.it/320/08e/fff', ...input.value};
+
     return <Card
       rounded
       width={256}>
       <label>
-        <CardImage src={this.state.imgPath}/>
+        <CardImage src={path}/>
         <input
           {...input}
           {...rest}
-          onChange={this.handleChange.bind(this)}
+          type="file"
+          value=""
           style={{position: 'fixed', top: '-100em'}}/>
       </label>
-      {this.state.name}
+      {name}
     </Card>
   }
 }
 
 export class Devices extends Component {
   render() {
+    console.log('DevicesDevicesDevices', this.props, this.state);
     return (
-      <form onSubmit={e => { this.props.addDevice(); return e; }}>
+      <form onSubmit={e => { e.preventDefault(); this.props.actions.saveForm(); }}>
         <Field
           label="Name"
           name="name"
@@ -118,18 +121,13 @@ export class Devices extends Component {
 
         <Field
           name="image"
-          type="file"
           parse={serializeFiles}
           component={ImageUploadCard}/>
 
-        <Button type="submit"
-                onClick={(e) => { console.log(this.props);this.props.addDevice(); return e;}}>Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
     );
   }
 }
 
-export default reduxForm({
-  form: 'newDevice',
-  validate
-})(Devices)
+export default Devices
