@@ -3,38 +3,28 @@ import { connect } from 'react-redux';
 import AddDevice from '../../components/devices/form';
 import { addDeviceAsync, addDevice } from '../../actions/device';
 import { reduxForm } from 'redux-form';
-import Ajv from 'ajv';
 
-const ajv = Ajv({allErrors: true});
-
-const schema = {
-  "properties": {
-    "name": { "type": "string" },
-    "model": { "type": "string" },
-    "os": { "type": "string", "pattern": "ios|android" },
-    "uuid": { "type": "string" },
-    "image": {
-      "properties": {
-        "name": { "type": "string" },
-        "path": { "type": "string" },
-        "type": { "type": "string", "pattern": "ios|android" },
-      }
-    }
-
+const validate = data => {
+  const errors = {};
+  if (!data.name) {
+    errors.name = "Name cannot be empty";
   }
+  if (!~['LG', 'Apple', 'Samsung'].indexOf(data.brand)) {
+    errors.brand = 'Brand must be LG, Apple, Samsung';
+  }
+  if (!data.model) {
+    errors.model = "Model cannot be empty"
+  }
+  if (data.os !== 'ios' || data.os !== 'android') {
+    errors.os = "OS must be Android or iOS";
+  }
+
+  if (!data.uuid) {
+    errors.uuid = "Uuid cannot be empty";
+  }
+
+  return errors;
 };
-
-
-const validate = ajv.compile(schema);
-
-function test(data) {
-  var valid = validate(data);
-  if (valid) console.log('Valid!');
-  else {
-    console.log('lllllllllllll', validate.errors);
-  }
-}
-test({"name": "abc", "model": 2, os: 'android', image: { name: 'dada', type: 'ddd'}});
 
 function mapDispatchToProps(dispatch) {
   return { actions: { saveForm: bindActionCreators(addDeviceAsync, dispatch)}};
@@ -42,6 +32,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(null, mapDispatchToProps)(
   reduxForm({
-    form: 'newDevice'
+    form: 'newDevice',
+    validate: validate
   })(AddDevice)
 );

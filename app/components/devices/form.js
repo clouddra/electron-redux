@@ -78,12 +78,11 @@ export class Devices extends Component {
         <Field
           label="Name"
           name="name"
-          placeholder="Placeholder"
           message="lol"
           type="text"
           component={renderComponent(Input)}/>
         <Field
-          label="Select"
+          label="Brand"
           name="brand"
           options={[{children: 'Apple', value: 'Apple'}, {children: 'Samsung', value: 'Samsung'}, {children: 'LG', value: 'LG'}]}
           rounded
@@ -91,7 +90,6 @@ export class Devices extends Component {
         <Field
           label="Model"
           name="model"
-          placeholder="Placeholder"
           message="lol"
           type="text"
           component={renderComponent(Input)}/>
